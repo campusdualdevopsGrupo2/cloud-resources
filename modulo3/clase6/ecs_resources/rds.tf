@@ -50,7 +50,7 @@ resource "aws_db_instance" "mysql_db" {
   password          = var.db_password  # Asegúrate de usar contraseñas seguras
   skip_final_snapshot = true
   publicly_accessible = true
-  multi_az          = var.replicas>1?true:false
+  multi_az          = false
   storage_type      = "gp2"
   db_subnet_group_name  = aws_db_subnet_group.my_db_subnet_group.name
   #b_subnet_group
