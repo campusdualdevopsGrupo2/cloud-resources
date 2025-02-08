@@ -33,7 +33,7 @@ resource "aws_security_group" "ecs_service_sg" {
 
 resource "aws_ecs_service" "nginx_service" {
   name            = "nginx-service"
-  cluster         = var.ecs_cluster_id # Aquí se especifica el cluster donde se ejecutará la tarea
+  cluster         = var.cluster_id # Aquí se especifica el cluster donde se ejecutará la tarea
   task_definition = aws_ecs_task_definition.nginx_task.arn
   desired_count   = 1
 
@@ -82,7 +82,7 @@ resource "aws_ecs_task_definition" "nginx_task" {
 # --------- FLASK
 resource "aws_ecs_service" "flask_service" {
   name            = "flask-service"
-  cluster         = data.terraform_remote_state.ecs.outputs.ecs_cluster_id # Aquí se especifica el cluster donde se ejecutará la tarea
+  cluster         = var.cluster_id # Aquí se especifica el cluster donde se ejecutará la tarea
   task_definition = aws_ecs_task_definition.flask_task.arn
   desired_count   = 1
 
