@@ -29,7 +29,7 @@ resource "aws_security_group" "rds_sg" {
 }
 
 resource "aws_db_subnet_group" "my_db_subnet_group" {
-  name        = "my-db-subnet-group-${var.tag_value}"
+  name        = lower("my-db-subnet-group-${var.tag_value}")
   description = "Subnets for RDS instance"
   subnet_ids  = var.subnets  # Referencia a las subredes existentes
 
