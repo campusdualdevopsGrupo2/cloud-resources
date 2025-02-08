@@ -41,11 +41,11 @@ resource "aws_db_subnet_group" "my_db_subnet_group" {
 resource "aws_db_instance" "mysql_db" {
   #count = 0
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
-  identifier        = "mymysqldb${var.tag_value}"
+  identifier        = lower("mymysqldb${var.tag_value}")
   engine            = "mysql"
   instance_class    = "db.t3.micro"  # Clase de instancia para MySQL
   allocated_storage = 10  # Almacenamiento en GB
-  db_name           = "mydatabase${var.tag_value}"
+  db_name           = lower("mydatabase${var.tag_value}")
   username          = var.db_username
   password          = var.db_password  # Asegúrate de usar contraseñas seguras
   skip_final_snapshot = true
@@ -63,18 +63,3 @@ resource "aws_db_instance" "mysql_db" {
   ]
 }
 
-# ------------------------------------------------------------------ RDS infra 
-/*
-resource "null_resource" "update_rdsvars_ini1" {
-  provisioner "local-exec" {
-    interpreter = ["/bin/bash", "-c"]
-    command = "echo rds_username: ${aws_db_instance.mysql_db.username}   > ${var.module_path}ansible/vars.yml && echo rds_password: ${aws_db_instance.mysql_db.password}   >> ${var.module_path}ansible/vars.yml && echo rds_endpoint: ${aws_db_instance.mysql_db.endpoint}   >> ${var.module_path}ansible/vars.yml && echo rds_db_name: ${aws_db_instance.mysql_db.db_name}   >> ${var.module_path}ansible/vars.yml"
-
-  }
-  # Usar triggers para forzar la ejecución del recurso
-  triggers = {
-    always_run = "${timestamp()}"  # Usamos timestamp como valor cambiante
-  }
-  depends_on=[aws_db_instance.mysql_db]
-  
-}*/
