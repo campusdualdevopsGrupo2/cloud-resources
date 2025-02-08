@@ -35,3 +35,13 @@ variable "cluster_id" {
   type= string
   default ="arn:algo"
 }
+
+variable "db_username" {
+  type = string
+  sensitive= true  # Esto marca la variable como sensible
+}
+
+variable "db_password" {
+  type = string
+  sensitive = true  # Esto marca la variable como sensible
+}
