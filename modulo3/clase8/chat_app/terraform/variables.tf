@@ -21,3 +21,8 @@ variable "ecr_url" {
   type        = string
   default= "248189943700.dkr.ecr.eu-west-2.amazonaws.com/repositorio-grupo-dos"
 }
+variable "aws_region" {
+  description = "La región de AWS donde se desplegarán los recursos"
+  type        = string
+  default     = "eu-west-2"  # Valor por defecto para la región (París)
+}
