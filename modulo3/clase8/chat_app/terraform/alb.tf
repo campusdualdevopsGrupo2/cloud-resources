@@ -1,6 +1,6 @@
 
 resource "aws_security_group" "alb_sg" {
-  name        = "${var.tag_value}ecs-alb-sg"
+  name        = "${var.tag_value}ecs-alb-sg-eks"
   description = "Security group for ALB"
   vpc_id      = var.vpc_id
 
@@ -31,7 +31,7 @@ resource "aws_security_group" "alb_sg" {
 
 # Crear el Application Load Balancer (ALB)
 resource "aws_lb" "my_alb" {
-  name               = "ecs-alb-${var.tag_value}"
+  name               = "ecs-alb-${var.tag_value}-eks"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
@@ -47,7 +47,7 @@ resource "aws_lb" "my_alb" {
 
 # Crear el Target Group
 resource "aws_lb_target_group" "ecs_targets" {
-  name     = "${var.tag_value}ecs-target-group"
+  name     = "${var.tag_value}ecs-target-group-eks"
   port     = 80
   protocol = "HTTP"
   vpc_id   = var.vpc_id
