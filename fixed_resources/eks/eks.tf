@@ -38,7 +38,7 @@ resource "null_resource" "update_kubeconfig" {
     command = "aws eks --region ${var.aws_region} update-kubeconfig --name ${module.eks.cluster_name}"
 
     environment = {
-      AWS_PROFILE = var.aws_profile  # Si utilizas un perfil específico de AWS
+      AWS_PROFILE = "default" # Si utilizas un perfil específico de AWS
     }
   }
 }
