@@ -25,10 +25,6 @@ module "eks" {
   }
 }
 
-# Proveedor de Kubernetes usando el config_path de kubeconfig
-provider "kubernetes" {
-  config_path = "~/.kube/config"
-}
 
 output "node_security_group_id" {
   description = "ID of the node shared security group"
