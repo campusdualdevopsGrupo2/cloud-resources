@@ -68,3 +68,9 @@ variable "cluster_endpoint_private_access" {
   type        = bool
   default     = true
 }
+
+variable "aws_region" {
+  description = "La región de AWS donde se crearán los recursos"
+  type        = string
+  default     = "eu-west-2"  # Región predeterminada
+}
