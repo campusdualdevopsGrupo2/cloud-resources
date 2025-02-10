@@ -26,25 +26,8 @@ module "eks" {
 }
 
 
-output "node_security_group_id" {
-  description = "ID of the node shared security group"
-  value       = try(module.eks.node_security_group_id, null)
-}
-output "cluster_name" {
 
-  value       = try(module.eks.cluster_name, null)
-}
 
-/*resource "null_resource" "update_kubeconfig" {
-  depends_on = [module.eks]  # Asegura que este recurso se ejecute después de que el clúster EKS se haya creado.
 
-  provisioner "local-exec" {
-    command = "aws eks --region ${var.aws_region} update-kubeconfig --name ${module.eks.cluster_name}"
-
-    environment = {
-      AWS_PROFILE = "default" # Si utilizas un perfil específico de AWS
-    }
-  }
-}*/
 
 
