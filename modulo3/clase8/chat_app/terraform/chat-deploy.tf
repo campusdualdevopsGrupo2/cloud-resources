@@ -12,6 +12,3 @@ resource "kubernetes_manifest" "nginx_deployment" {
 }
 
 
-provider "kubernetes" {
-  config_path = "~/.kube/config"
-}
