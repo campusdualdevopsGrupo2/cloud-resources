@@ -74,7 +74,7 @@ variable "tags" {
   type        = map(string)
 }
 
-variable "db_subnet_group_description" {
+variable "subnet_group_description" {
   description = "The description for the DB subnet group"
   type        = string
   default     = "Default DB subnet group"

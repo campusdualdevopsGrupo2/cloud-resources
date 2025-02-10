@@ -1,0 +1,15 @@
+terraform {
+  source = "../../modules/kubernetes_service"
+}
+
+inputs = {
+  name         = "mi-servicio"
+  namespace    = "default"
+  labels       = { app = "mi-app" }
+  selector     = { app = "mi-app" }
+  service_type = "ClusterIP"
+  port_name    = "http"
+  port         = 80
+  target_port  = 8080
+  port_protocol = "TCP"
+}

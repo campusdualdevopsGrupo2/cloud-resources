@@ -1,0 +1,15 @@
+terraform {
+  source = "../../modules/kubernetes_deployment"
+}
+
+inputs = {
+  name             = "mi-deployment"
+  namespace        = "default"
+  labels           = { app = "mi-app" }
+  replicas         = 3
+  match_labels     = { app = "mi-app" }
+  template_labels  = { app = "mi-app" }
+  container_name   = "mi-contenedor"
+  image            = "nginx:latest"
+  container_port   = 80
+}
