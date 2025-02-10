@@ -26,3 +26,9 @@ variable "aws_region" {
   type        = string
   default     = "eu-west-2"  # Valor por defecto para la región (París)
 }
+
+variable "cluster_name" {
+  description = "cluster naming resources"
+  type        = string
+  #default= "Grupo2"
+}
