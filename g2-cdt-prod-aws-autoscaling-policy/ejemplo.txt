@@ -1,0 +1,15 @@
+terraform {
+  source = "../../modules/aws_appautoscaling_policy"
+}
+
+inputs = {
+  name                   = "my-scaling-policy"
+  service_namespace      = "ecs"
+  resource_id            = "service/my-cluster/my-service"
+  scalable_dimension     = "ecs:service:DesiredCount"
+  policy_type            = "TargetTrackingScaling"
+  target_value           = 50
+  predefined_metric_type = "ECSServiceAverageCPUUtilization"
+  scale_in_cooldown      = 300
+  scale_out_cooldown     = 300
+}
