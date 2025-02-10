@@ -1,0 +1,22 @@
+terraform {
+  source = "../../modules/rds"
+}
+
+inputs = {
+  allocated_storage       = 20
+  engine                  = "mysql"
+  engine_version          = "8.0"
+  instance_class          = "db.t3.micro"
+  db_name                 = "mi_basededatos"
+  username                = "admin"
+  password                = "password_secreto"
+  db_subnet_group_name    = "mi_db_subnet_group"
+  vpc_security_group_ids  = ["sg-12345678"]
+  skip_final_snapshot     = true
+  deletion_protection     = false
+  publicly_accessible     = false
+  tags = {
+    Environment = "dev"
+    Project     = "mi_proyecto"
+  }
+}
