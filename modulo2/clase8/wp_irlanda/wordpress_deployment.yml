@@ -1,0 +1,67 @@
+name: Terragrunt Deployment de Wordpress
+
+on:
+  workflow_dispatch:
+
+jobs:
+  terragrunt:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Terraform
+        run: |
+          curl -LO https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
+          unzip terraform_1.0.0_linux_amd64.zip
+          sudo mv terraform /usr/local/bin/
+
+      - name: Install Terragrunt
+        run: |
+          curl -sLo terragrunt https://github.com/gruntwork-io/terragrunt/releases/download/v0.42.8/terragrunt_linux_amd64
+          chmod +x terragrunt
+          sudo mv terragrunt /usr/local/bin/
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-3  # Se cambiará dinámicamente más adelante
+
+      - name: Terragrunt Init, Plan & Apply (eu-west-2)
+        env:
+          TF_VAR_region: "eu-west-2"
+        run: |
+          cd modulo2/clase8
+          terragrunt init
+          terragrunt plan -out=tfplan
+          terragrunt apply -auto-approve tfplan
+
+      - name: Terragrunt Init, Plan & Apply (eu-west-3)
+        env:
+          TF_VAR_region: "eu-west-3"
+        run: |
+          cd modulo2/clase8
+          terragrunt init
+          terragrunt plan -out=tfplan
+          terragrunt apply -auto-approve tfplan
+
+      - name: Terragrunt Destroy (us-east-1)
+        if: success()
+        env:
+          TF_VAR_region: "eu-west-3"
+        run: |
+          cd modulo2/clase8
+          terragrunt destroy -auto-approve
+
+      - name: Terragrunt Destroy (eu-west-2)
+        if: success()
+        env:
+          TF_VAR_region: "eu-west-2"
+        run: |
+          cd modulo2/clase8
+          terragrunt destroy -auto-approve
+
+
