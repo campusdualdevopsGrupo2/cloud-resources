@@ -1,9 +1,11 @@
-output "db_instance_endpoint" {
-  description = "Endpoint de la instancia RDS"
-  value       = aws_db_instance.this.endpoint
+output "db_instance_id" {
+  value = aws_db_instance.this.id
 }
 
-output "db_instance_id" {
-  description = "ID de la instancia RDS"
-  value       = aws_db_instance.this.id
+output "db_instance_endpoint" {
+  value = aws_db_instance.this.endpoint
+}
+
+output "db_subnet_group_id" {
+  value = aws_db_subnet_group.this.id
 }
