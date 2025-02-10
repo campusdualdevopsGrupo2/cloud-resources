@@ -1,81 +1,86 @@
 variable "allocated_storage" {
-  description = "Almacenamiento asignado en GB"
+  description = "The allocated storage in gigabytes"
   type        = number
-  default     = 20
 }
 
 variable "engine" {
-  description = "Motor de base de datos"
+  description = "The database engine"
   type        = string
-  default     = "mysql"
 }
 
 variable "engine_version" {
-  description = "Versión del motor de base de datos"
+  description = "The version of the database engine"
   type        = string
-  default     = "8.0"
 }
 
 variable "instance_class" {
-  description = "Clase de instancia de RDS"
+  description = "The instance class for the DB instance"
   type        = string
-  default     = "db.t3.micro"
 }
 
 variable "db_name" {
-  description = "Nombre de la base de datos"
+  description = "The name of the database"
   type        = string
 }
 
 variable "username" {
-  description = "Nombre de usuario para la base de datos"
+  description = "The master username for the DB instance"
   type        = string
 }
 
 variable "password" {
-  description = "Contraseña para la base de datos"
+  description = "The master password for the DB instance"
   type        = string
   sensitive   = true
 }
 
 variable "parameter_group_name" {
-  description = "Nombre del grupo de parámetros a asociar"
+  description = "The DB parameter group name"
   type        = string
-  default     = null
 }
 
 variable "db_subnet_group_name" {
-  description = "Nombre del grupo de subredes para la base de datos"
+  description = "The name of the DB subnet group"
   type        = string
-  default     = null
+}
+
+variable "subnet_ids" {
+  description = "A list of subnet IDs for the DB subnet group"
+  type        = list(string)
 }
 
 variable "vpc_security_group_ids" {
-  description = "IDs de grupos de seguridad VPC a asociar"
+  description = "A list of security group IDs to associate with the DB instance"
   type        = list(string)
-  default     = []
 }
 
 variable "skip_final_snapshot" {
-  description = "Omitir snapshot final al eliminar la instancia"
+  description = "Whether to skip the final snapshot when deleting the DB instance"
   type        = bool
-  default     = true
 }
 
 variable "deletion_protection" {
-  description = "Habilitar protección de eliminación"
+  description = "Whether to enable deletion protection for the DB instance"
   type        = bool
-  default     = false
 }
 
 variable "publicly_accessible" {
-  description = "Determina si la instancia es públicamente accesible"
+  description = "Whether the DB instance is publicly accessible"
   type        = bool
-  default     = false
 }
 
 variable "tags" {
-  description = "Etiquetas para la instancia"
+  description = "A map of tags to assign to the DB instance"
   type        = map(string)
-  default     = {}
+}
+
+variable "db_subnet_group_description" {
+  description = "The description for the DB subnet group"
+  type        = string
+  default     = "Default DB subnet group"
+}
+
+variable "db_subnet_group_tags" {
+  description = "A map of tags to assign to the DB subnet group"
+  type        = map(string)
 }
