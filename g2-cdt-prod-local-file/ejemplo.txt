@@ -1,0 +1,9 @@
+terraform {
+  source = "../../modules/local_file"
+}
+
+inputs = {
+  filename = "${path_relative_from_include()}/my_file.txt"
+  content  = "Este es el contenido del archivo creado por el módulo local_file."
+  # file_permission es opcional, se usará el valor por defecto "0644" si no se especifica
+}
