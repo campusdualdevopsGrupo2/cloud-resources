@@ -1,0 +1,18 @@
+terraform {
+  source = "../../modules/kubernetes_horizontal_pod_autoscaler"
+}
+
+inputs = {
+  name                      = "mi-hpa"
+  namespace                 = "default"
+  labels                    = { app = "mi-app" }
+  scale_target_api_version  = "apps/v1"
+  scale_target_kind         = "Deployment"
+  scale_target_name         = "mi-deployment"
+  min_replicas              = 1
+  max_replicas              = 5
+  metric_type               = "Resource"       # Otras opciones pueden ser, en versiones futuras, Metrics (según el provider)
+  resource_name             = "cpu"
+  target_type               = "Utilization"
+  average_utilization       = 50
+}
