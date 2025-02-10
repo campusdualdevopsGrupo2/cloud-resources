@@ -1,0 +1,13 @@
+terraform {
+  source = "../../modules/aws_appautoscaling_target"
+}
+
+inputs = {
+  service_namespace  = "ecs"
+  resource_id        = "service/my-cluster/my-service"
+  scalable_dimension = "ecs:service:DesiredCount"
+  min_capacity       = 1
+  max_capacity       = 10
+  # Si el servicio requiere un role ARN, especificarlo; de lo contrario, dejarlo en null
+  role_arn           = null
+}
