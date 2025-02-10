@@ -1,0 +1,18 @@
+terraform {
+  source = "path/to/your/module"
+}
+
+inputs = {
+  name                     = "your-name"
+  port                     = "your-port"
+  protocol                 = "your-protocol"
+  vpc_id                   = "your-vpc-id"
+  target_type              = "your-target-type"
+  healthy_threshold        = "your-healthy-threshold"
+  unhealthy_threshold      = "your-unhealthy-threshold"
+  health_check_timeout     = "your-health-check-timeout"
+  health_check_interval    = "your-health-check-interval"
+  health_check_path        = "your-health-check-path"
+  health_check_protocol    = "your-health-check-protocol"
+  tags                     = "your-tags"
+}

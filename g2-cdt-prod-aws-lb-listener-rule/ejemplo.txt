@@ -1,0 +1,11 @@
+terraform {
+  source = "path/to/your/module"
+}
+
+inputs = {
+  listener_arn               = "your-listener-arn"
+  priority                   = "your-priority"
+  action_type                = "your-action-type"
+  action_target_group_arn    = "your-target-group-arn"
+  host_header_values         = ["your-host-header-values"]
+}

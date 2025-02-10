@@ -1,0 +1,16 @@
+terraform {
+  source = "../../modules/aws_lb"
+}
+
+inputs = {
+  name                       = "mi-loadbalancer"
+  internal                   = false
+  load_balancer_type         = "application"
+  subnets                    = ["subnet-12345678", "subnet-87654321"]
+  security_groups            = ["sg-0123456789abcdef0"]
+  enable_deletion_protection = false
+  tags = {
+    Environment = "dev"
+    Project     = "mi_proyecto"
+  }
+}

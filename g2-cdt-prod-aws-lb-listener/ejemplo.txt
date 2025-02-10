@@ -1,0 +1,13 @@
+terraform {
+  source = "path/to/your/module"
+}
+
+inputs = {
+  load_balancer_arn               = "your-load-balancer-arn"
+  port                            = "your-port"
+  protocol                        = "your-protocol"
+  ssl_policy                      = "your-ssl-policy"      # Para HTTPS
+  certificate_arn                 = "your-certificate-arn" # Para HTTPS
+  default_action_type             = "your-default-action-type"
+  default_action_target_group_arn = "your-target-group-arn"
+}
