@@ -1,0 +1,58 @@
+module "my_iam_role" {
+  source              = "./terraform-iam-role"
+  aws_region         = "eu-east-1"
+  role_name          = "my-iam-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess",
+    "arn:aws:iam::aws:policy/AWSLambdaBasicExecutionRole"
+  ]
+}
+
+
+module "my_iam_policy_role" {
+  source              = "./terraform-iam-policy-role"
+  aws_region         = "us-east-1"
+  policy_name        = "my-custom-policy"
+  policy_description = "Una política personalizada para acceso a S3."
+  policy_document    = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:ListBucket",
+          "s3:GetObject"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+  role_name          = "my-iam-role"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Principal = {
+          Service = "ec2.amazonaws.com"
+        }
+        Action = "sts:AssumeRole"
+      }
+    ]
+  })
+}
