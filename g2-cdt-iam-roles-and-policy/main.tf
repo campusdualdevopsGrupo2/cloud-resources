@@ -1,3 +1,11 @@
+resource "aws_iam_policy" "this" {
+  name        = var.policy_name
+  description = var.policy_description
+  policy      = var.policy_document
+}
+
+
+
 resource "aws_iam_role" "this" {
   name               = var.role_name
   assume_role_policy = var.assume_role_policy

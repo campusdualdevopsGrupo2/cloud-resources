@@ -4,6 +4,22 @@ variable "aws_region" {
   default     = "us-east-1"
 }
 
+variable "policy_name" {
+  description = "El nombre de la política de IAM."
+  type        = string
+}
+
+variable "policy_description" {
+  description = "Descripción de la política de IAM."
+  type        = string
+}
+
+variable "policy_document" {
+  description = "El documento de la política de IAM en formato JSON."
+  type        = string
+}
+
+
 variable "role_name" {
   description = "El nombre del rol de IAM."
   type        = string
