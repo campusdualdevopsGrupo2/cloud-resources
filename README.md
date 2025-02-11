@@ -1,4 +1,4 @@
-# Cloud-Resources Borrador
+# Cloud-Resources
 
 Este repositorio contiene módulos para la administración y despliegue de infraestructura en AWS utilizando Terraform.
 
