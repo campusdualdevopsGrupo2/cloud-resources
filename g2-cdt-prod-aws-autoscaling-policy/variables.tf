@@ -1,47 +1,79 @@
+# Variables para el módulo
 variable "name" {
   description = "Nombre de la política de escalado"
   type        = string
 }
 
 variable "service_namespace" {
-  description = "El namespace del servicio AWS que soporta Application Auto Scaling (ej. ecs, ec2, dynamodb, etc.)"
+  description = "El espacio de nombres del servicio (por ejemplo, ecs, dynamodb, etc.)"
   type        = string
 }
 
 variable "resource_id" {
-  description = "El identificador del recurso al que se aplicará la política (ej. 'service/cluster-name/service-name' para ECS)"
+  description = "ID del recurso que será escalado"
   type        = string
 }
 
 variable "scalable_dimension" {
-  description = "La dimensión escalable (ej. 'ecs:service:DesiredCount')"
+  description = "Dimensión escalable del recurso (por ejemplo, ecs:service:DesiredCount)"
   type        = string
 }
 
 variable "policy_type" {
-  description = "Tipo de política de escalado. Usualmente 'TargetTrackingScaling'"
+  description = "Tipo de política de escalado (por ejemplo, TargetTracking o StepScaling)"
   type        = string
-  default     = "TargetTrackingScaling"
 }
 
 variable "target_value" {
-  description = "El valor objetivo para la métrica (por ejemplo, 50 para el 50% de utilización)"
+  description = "Valor objetivo para la política de TargetTracking"
   type        = number
+  default     = null
 }
 
 variable "predefined_metric_type" {
-  description = "El tipo de métrica predefinida (ej. 'ECSServiceAverageCPUUtilization')"
+  description = "Tipo de métrica predefinida para la política de TargetTracking"
   type        = string
+  default     = null
 }
 
 variable "scale_in_cooldown" {
-  description = "Tiempo en segundos de cooldown tras una acción de scale in"
+  description = "Tiempo en segundos para la fase de enfriamiento después de una acción de escalado hacia abajo"
   type        = number
   default     = 300
 }
 
 variable "scale_out_cooldown" {
-  description = "Tiempo en segundos de cooldown tras una acción de scale out"
+  description = "Tiempo en segundos para la fase de enfriamiento después de una acción de escalado hacia arriba"
   type        = number
   default     = 300
+}
+
+variable "adjustment_type" {
+  description = "Tipo de ajuste para la política Step Scaling"
+  type        = string
+  default     = null
+}
+
+variable "cooldown" {
+  description = "Tiempo en segundos para la fase de enfriamiento después de un ajuste de escalado"
+  type        = number
+  default     = null
+}
+
+variable "metric_interval_lower_bound" {
+  description = "Límite inferior del intervalo de la métrica para Step Scaling"
+  type        = number
+  default     = null
+}
+
+variable "metric_interval_upper_bound" {
+  description = "Límite superior del intervalo de la métrica para Step Scaling"
+  type        = number
+  default     = null
+}
+
+variable "scaling_adjustment" {
+  description = "Ajuste de escalado para Step Scaling"
+  type        = number
+  default     = null
 }

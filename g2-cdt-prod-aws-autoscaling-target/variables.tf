@@ -11,16 +11,19 @@ variable "resource_id" {
 variable "scalable_dimension" {
   description = "La dimensión escalable del recurso (ej. 'ecs:service:DesiredCount')"
   type        = string
+  default= "ecs:service:DesiredCount"
 }
 
 variable "min_capacity" {
   description = "La capacidad mínima para el recurso escalable"
   type        = number
+  default= 1
 }
 
 variable "max_capacity" {
   description = "La capacidad máxima para el recurso escalable"
   type        = number
+  default= 3
 }
 
 variable "role_arn" {

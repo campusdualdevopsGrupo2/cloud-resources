@@ -8,7 +8,7 @@ variable "name" {
 variable "retention_in_days" {
   description = "Número de días que se conservarán los logs antes de ser eliminados"
   type        = number
-  default     = 30 # 30 días por defecto
+  default     = 8 # 30 días por defecto
 }
 
 # Variable para las etiquetas del Log Group

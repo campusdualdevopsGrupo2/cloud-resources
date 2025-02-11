@@ -1,47 +1,61 @@
-# ecs_task_definition/variables.tf
 variable "family" {
-  description = "El nombre de la familia de la definición de la tarea de ECS"
+  description = "El nombre de la familia de la tarea ECS"
   type        = string
 }
 
 variable "execution_role_arn" {
   description = "ARN del rol de ejecución de ECS"
   type        = string
+  default     = ""
 }
 
 variable "task_role_arn" {
-  description = "ARN del rol de tarea de ECS"
+  description = "ARN del rol de la tarea ECS"
   type        = string
+  default     = ""
 }
 
 variable "network_mode" {
-  description = "Modo de red para la definición de tarea (por ejemplo, awsvpc, bridge, host)"
+  description = "Modo de red para la tarea (bridge, host, awsvpc)"
   type        = string
   default     = "awsvpc"
 }
 
 variable "cpu" {
-  description = "La cantidad de CPU para la tarea (por ejemplo, 256, 512, 1024)"
+  description = "Cantidad de CPU para la tarea"
   type        = string
+  default     = "256"
 }
 
 variable "memory" {
-  description = "La cantidad de memoria para la tarea (por ejemplo, 512, 1024)"
+  description = "Memoria para la tarea"
   type        = string
+  default     = "512"
 }
 
 variable "requires_compatibilities" {
-  description = "Las compatibilidades necesarias para la tarea (por ejemplo, FARGATE o EC2)"
+  description = "Compatibilidades requeridas (EC2, Fargate)"
   type        = list(string)
+  default     = ["FARGATE"]
 }
 
 variable "container_definitions" {
-  description = "Las definiciones de los contenedores en formato JSON"
-  type        = string
+  description = "Definiciones de contenedores en formato JSON"
+  type        = any
 }
 
 variable "tags" {
-  description = "Etiquetas para la definición de la tarea"
+  description = "Etiquetas opcionales para la tarea"
   type        = map(string)
   default     = {}
+}
+
+# Volúmenes opcionales
+variable "volumes" {
+  description = "Lista de volúmenes opcionales para la tarea"
+  type        = list(object({
+    name      = string
+    host_path = string
+  }))
+  default     = []
 }
