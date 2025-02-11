@@ -1,22 +1,43 @@
 terraform {
-  source = "../../modules/rds"
+  # Indica la ruta relativa al módulo que contiene el código de Terraform para la DB
+  source = "../../modules/db"
 }
 
 inputs = {
-  allocated_storage       = 20
-  engine                  = "mysql"
-  engine_version          = "8.0"
-  instance_class          = "db.t3.micro"
-  db_name                 = "mi_basededatos"
-  username                = "admin"
-  password                = "password_secreto"
-  db_subnet_group_name    = "mi_db_subnet_group"
-  vpc_security_group_ids  = ["sg-12345678"]
-  skip_final_snapshot     = true
-  deletion_protection     = false
-  publicly_accessible     = false
+  # Configuración de la instancia de base de datos
+  allocated_storage      = 20                    # Almacenamiento asignado en GB
+  engine                 = "mysql"               # Motor de base de datos (ej. mysql, postgres, etc.)
+  instance_class         = "db.t3.micro"         # Clase de instancia de la DB
+  db_name                = "mydatabase"          # Nombre de la base de datos
+  username               = "admin"               # Usuario administrador
+  password               = "changeme123"         # Contraseña (¡asegúrate de usar un valor seguro!)
+  
+  # Nombre del grupo de subredes para la DB
+  db_subnet_group_name   = "my-db-subnet-group"
+  
+  # Grupos de seguridad a los que se asociará la DB
+  vpc_security_group_ids = ["sg-0123456789abcdef"]  # Reemplaza con el ID real de tu SG
+  
+  skip_final_snapshot    = true                  # Evita snapshot final al destruir la DB
+  deletion_protection    = false                 # Permite eliminar la DB si es necesario
+  publicly_accessible    = false                 # La DB no será accesible públicamente
+  multi_az               = false                 # No se crea en múltiples zonas de disponibilidad
+  storage_type           = "gp2"                 # Tipo de almacenamiento
+  
+  # Configuración del grupo de subredes para la DB
+  subnet_ids             = [
+    "subnet-01234567",    # Reemplaza con los IDs reales de las subredes
+    "subnet-89abcdef"
+  ]
+  subnet_group_description = "Grupo de subred para la DB"
+  db_subnet_group_tags   = {
+    Environment = "dev"
+  }
+  
+  # Etiquetas generales para la instancia DB
   tags = {
     Environment = "dev"
-    Project     = "mi_proyecto"
+    Project     = "mi-proyecto"
   }
 }
+
