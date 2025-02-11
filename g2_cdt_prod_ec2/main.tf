@@ -9,15 +9,24 @@ resource "aws_instance" "this" {
     Name = var.instance_name
   }
 
-  # Optional: Add a provisioner or other resources like EBS volumes here
-  provisioner "remote-exec" {
-    inline = var.provisioning_commands
+  # Iterate over the provisioners to add them dynamically
+  dynamic "provisioner" {
+    for_each = var.provisioners
+    content {
+      type = provisioner.value.type
 
-    connection {
-      type        = "ssh"
-      host        = self.public_ip
-      user        = var.ssh_user
-      private_key = var.private_key
+      inline = provisioner.value.inline
+      script = provisioner.value.script
+      path   = provisioner.value.path
+
+      connection {
+        type        = "ssh"
+        host        = self.public_ip
+        user        = var.ssh_user
+        private_key = var.private_key
+      }
+
+      local-exec = provisioner.value.local_exe
     }
   }
 }

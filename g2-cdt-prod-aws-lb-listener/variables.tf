@@ -1,37 +1,49 @@
 variable "load_balancer_arn" {
-  description = "ARN del Load Balancer al que se asociará el Listener"
+  description = "ARN del Load Balancer al que se asocia el listener"
   type        = string
 }
 
 variable "port" {
-  description = "Puerto en el que el Listener escuchará"
+  description = "El puerto en el que escucha el Load Balancer"
   type        = number
 }
 
 variable "protocol" {
-  description = "Protocolo del Listener (HTTP o HTTPS)"
+  description = "El protocolo para el listener (HTTP, HTTPS)"
   type        = string
 }
 
 variable "ssl_policy" {
-  description = "SSL policy a aplicar (requerido para HTTPS)"
+  description = "La política SSL para HTTPS"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "certificate_arn" {
-  description = "ARN del certificado para HTTPS"
+  description = "ARN del certificado SSL para HTTPS"
   type        = string
-  default     = null
+  default     = ""
 }
 
-variable "default_action_type" {
-  description = "Tipo de acción por defecto (por ejemplo: 'forward')"
-  type        = string
-  default     = "forward"
-}
-
-variable "default_action_target_group_arn" {
-  description = "ARN del Target Group al que se redirigirá el tráfico en la acción por defecto"
-  type        = string
+# Acciones predeterminadas: Lista de acciones
+variable "default_actions" {
+  description = "Lista de acciones predeterminadas para el listener"
+  type = list(object({
+    type             = string
+    target_group_arn = string
+    fixed_response = optional(object({
+      status_code = string
+      content_type = string
+      message_body = string
+    }))
+    redirect = optional(object({
+      status_code = string
+      host        = string
+      path        = string
+      query       = string
+      port        = string
+      protocol    = string
+    }))
+  }))
+  default = []
 }

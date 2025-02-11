@@ -1,66 +1,84 @@
+# Nombre del Horizontal Pod Autoscaler
 variable "name" {
-  description = "Nombre del Horizontal Pod Autoscaler"
+  description = "El nombre del Horizontal Pod Autoscaler"
   type        = string
 }
 
+# Namespace donde se creará el Horizontal Pod Autoscaler
 variable "namespace" {
-  description = "Namespace en el que se creará el HPA"
+  description = "El namespace donde se creará el Horizontal Pod Autoscaler"
   type        = string
-  default     = "default"
 }
 
+# Etiquetas del Horizontal Pod Autoscaler
 variable "labels" {
-  description = "Etiquetas para el HPA"
+  description = "Etiquetas para el Horizontal Pod Autoscaler"
   type        = map(string)
   default     = {}
 }
 
+# Parámetros del target al que se aplicará el autoscaler
 variable "scale_target_api_version" {
-  description = "API version del objeto que se escalará (por ejemplo, apps/v1)"
+  description = "La versión de la API del target"
   type        = string
 }
 
 variable "scale_target_kind" {
-  description = "Tipo del recurso que se escalará (por ejemplo, Deployment)"
+  description = "El tipo de target (ej. Deployment, StatefulSet, etc.)"
   type        = string
 }
 
 variable "scale_target_name" {
-  description = "Nombre del recurso que se escalará"
+  description = "El nombre del target"
   type        = string
 }
 
+# Mínimo número de réplicas
 variable "min_replicas" {
-  description = "Número mínimo de réplicas"
+  description = "El número mínimo de réplicas"
   type        = number
   default     = 1
 }
 
+# Máximo número de réplicas
 variable "max_replicas" {
-  description = "Número máximo de réplicas"
+  description = "El número máximo de réplicas"
   type        = number
+  default     = 5
 }
 
-variable "metric_type" {
-  description = "Tipo de métrica a usar (por ejemplo, Resource)"
-  type        = string
-  default     = "Resource"
-}
+# Definición de métricas que usará el autoscaler
+variable "metrics" {
+  description = "Lista de métricas para el autoscaler"
+  type = list(object({
+    type = string
 
-variable "resource_name" {
-  description = "Nombre del recurso de la métrica (por ejemplo, cpu)"
-  type        = string
-  default     = "cpu"
-}
-
-variable "target_type" {
-  description = "Tipo de objetivo para la métrica (por ejemplo, Utilization)"
-  type        = string
-  default     = "Utilization"
-}
-
-variable "average_utilization" {
-  description = "Utilización promedio objetivo en porcentaje (por ejemplo, 50)"
-  type        = number
-  default     = 50
+    resource = optional(object({
+      name                = string
+      target_type         = string
+      average_utilization = optional(number)
+    }))
+    external = optional(object({
+      metric_name = string
+      target_value = string
+    }))
+  }))
+  default = [
+    {
+      type = "Resource"
+      resource = {
+        name                = "cpu"
+        target_type         = "Utilization"
+        average_utilization = 80
+      }
+    },
+    {
+      type = "Resource"
+      resource = {
+        name                = "memory"
+        target_type         = "Utilization"
+        average_utilization = 75
+      }
+    }
+  ]
 }

@@ -1,25 +1,39 @@
 variable "listener_arn" {
-  description = "ARN del Listener al que se le aplicará la regla"
+  description = "ARN del listener del Load Balancer"
   type        = string
 }
 
 variable "priority" {
-  description = "Prioridad de la regla (número entero)"
+  description = "Prioridad de la regla del listener"
   type        = number
 }
 
-variable "action_type" {
-  description = "Tipo de acción para la regla (por ejemplo, 'forward')"
-  type        = string
-  default     = "forward"
+# Acciones dinámicas: Lista de acciones
+variable "actions" {
+  description = "Lista de acciones a realizar en la regla del listener"
+  type = list(object({
+    type             = string
+    target_group_arn = string
+    # Puedes añadir más campos si se agregan más tipos de acciones
+    # fixed_response = optional(object({
+    #   status_code = string
+    #   content_type = string
+    #   message_body = string
+    # }))
+  }))
+  default = []
 }
 
-variable "action_target_group_arn" {
-  description = "ARN del Target Group para la acción de la regla"
-  type        = string
-}
-
-variable "host_header_values" {
-  description = "Lista de valores para la condición host_header"
-  type        = list(string)
+# Condiciones dinámicas: Lista de condiciones
+variable "conditions" {
+  description = "Lista de condiciones para la regla del listener"
+  type = list(object({
+    host_header    = optional(list(string))
+    path_pattern   = optional(list(string))
+    query_string   = optional(list(object({
+      key   = string
+      value = string
+    })))
+  }))
+  default = []
 }

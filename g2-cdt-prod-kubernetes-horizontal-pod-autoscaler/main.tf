@@ -15,14 +15,22 @@ resource "kubernetes_horizontal_pod_autoscaler" "this" {
     min_replicas = var.min_replicas
     max_replicas = var.max_replicas
 
-    metric {
-      type = var.metric_type
+    # Definir métricas de forma dinámica
+    dynamic "metric" {
+      for_each = var.metrics
+      content {
+        type = metric.value.type
 
-      resource {
-        name = var.resource_name
-        target {
-          type                = var.target_type
-          average_utilization = var.average_utilization
+        dynamic "resource" {
+          for_each = metric.value.type == "Resource" ? [metric.value.resource] : []
+          content {
+            name = resource.value.name
+            target {
+              type                = resource.value.target_type
+              average_utilization = resource.value.average_utilization
+            }
+          }
+
         }
       }
     }

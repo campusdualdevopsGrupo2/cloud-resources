@@ -20,6 +20,3 @@ resource "aws_ecs_service" "ecs_service" {
   tags = var.tags
 }
 
-# Outputs del módulo
-
-

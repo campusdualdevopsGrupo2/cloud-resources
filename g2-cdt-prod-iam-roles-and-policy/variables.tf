@@ -1,4 +1,4 @@
-variable "aws_region" {
+/*variable "aws_region" {
   description = "La región de AWS donde se creará el rol de IAM."
   type        = string
   default     = "us-east-1"
@@ -32,6 +32,72 @@ variable "assume_role_policy" {
 
 variable "managed_policy_arns" {
   description = "Lista de ARNs de políticas administradas que se adjuntarán al rol."
+  type        = list(string)
+  default     = []
+}*/
+
+
+# variables.tf
+
+variable "tag_value" {
+  description = "Prefijo de nombre para las políticas y roles"
+  type        = string
+}
+
+variable "assume_role_policy" {
+  description = "Política de asunción de rol para el IAM Role"
+  type        = any
+  default     = {
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action    = "sts:AssumeRole"
+        Effect    = "Allow"
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      }
+    ]
+  }
+}
+
+variable "policy" {
+  description = "Política de IAM para el role"
+  type        = any
+  default     = {
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = [
+          "ecr:GetAuthorizationToken",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+      {
+        Action   = [
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ]
+        Effect   = "Allow"
+        Resource = "*"
+      },
+      {
+        Action = [
+          "secretsmanager:GetSecretValue"
+        ]
+        Effect = "Allow"
+        Resource = "*"
+      }
+    ]
+  }
+}
+
+variable "policy_arns" {
+  description = "Lista de ARN de políticas para adjuntar al role"
   type        = list(string)
   default     = []
 }

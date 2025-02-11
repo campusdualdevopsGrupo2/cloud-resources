@@ -6,16 +6,19 @@ variable "allocated_storage" {
 variable "engine" {
   description = "The database engine"
   type        = string
+  default="mysql"
 }
 
-variable "engine_version" {
+/*variable "engine_version" {
   description = "The version of the database engine"
   type        = string
-}
+  default=""
+}*/
 
 variable "instance_class" {
   description = "The instance class for the DB instance"
   type        = string
+  default="db.t3.mmicro"
 }
 
 variable "db_name" {
@@ -34,10 +37,10 @@ variable "password" {
   sensitive   = true
 }
 
-variable "parameter_group_name" {
+/*variable "parameter_group_name" {
   description = "The DB parameter group name"
   type        = string
-}
+}*/
 
 variable "db_subnet_group_name" {
   description = "The name of the DB subnet group"
@@ -57,16 +60,19 @@ variable "vpc_security_group_ids" {
 variable "skip_final_snapshot" {
   description = "Whether to skip the final snapshot when deleting the DB instance"
   type        = bool
+  default= true
 }
 
 variable "deletion_protection" {
   description = "Whether to enable deletion protection for the DB instance"
   type        = bool
+  default= false
 }
 
 variable "publicly_accessible" {
   description = "Whether the DB instance is publicly accessible"
   type        = bool
+  default= true
 }
 
 variable "tags" {
@@ -83,4 +89,18 @@ variable "subnet_group_description" {
 variable "db_subnet_group_tags" {
   description = "A map of tags to assign to the DB subnet group"
   type        = map(string)
+}
+
+# Variable para determinar si se debe usar múltiples zonas de disponibilidad (AZs)
+variable "multi_az" {
+  description = "Indica si la infraestructura debe ser desplegada en múltiples zonas de disponibilidad"
+  type        = bool
+  default     = false  # Valor por defecto es false (no usar múltiples AZs)
+}
+
+# Variable para especificar el tipo de almacenamiento para las instancias
+variable "storage_type" {
+  description = "Tipo de almacenamiento para la instancia EC2 (ej. gp2, io1)"
+  type        = string
+  default     = "gp2"  # Valor por defecto es gp2 (almacenamiento SSD general-purpose)
 }

@@ -1,46 +1,53 @@
 variable "ami" {
-  description = "The ID of the AMI to use for the instance"
+  description = "AMI ID for the instance"
   type        = string
+  default="ami-06e02ae7bdac6b938"
 }
 
 variable "instance_type" {
-  description = "The instance type to use"
+  description = "Type of instance to launch"
   type        = string
+  default="t2.micro"
 }
 
 variable "key_name" {
-  description = "The name of the SSH key pair to use"
+  description = "SSH key pair name"
   type        = string
 }
 
 variable "subnet_id" {
-  description = "The subnet ID to launch the instance in"
+  description = "Subnet ID for the instance"
   type        = string
 }
 
 variable "security_group_ids" {
-  description = "The security group IDs to associate with the instance"
+  description = "List of security group IDs"
   type        = list(string)
 }
 
 variable "instance_name" {
-  description = "The name tag for the EC2 instance"
+  description = "Name of the instance"
   type        = string
-}
-
-variable "provisioning_commands" {
-  description = "Commands to execute on the instance after it starts"
-  type        = list(string)
-  default     = []
 }
 
 variable "ssh_user" {
-  description = "The SSH user to connect to the EC2 instance"
+  description = "SSH username for remote execution"
   type        = string
-  default     = "ubuntu" 
 }
 
 variable "private_key" {
-  description = "The private SSH key to use for the connection"
+  description = "Private key for SSH access"
   type        = string
+}
+
+variable "provisioners" {
+  description = "List of provisioners to run on the instance"
+  type = list(object({
+    type    = string
+    inline  = list(string)
+    script  = string
+    path    = string
+    local_exe = string
+  }))
+  default = []
 }
