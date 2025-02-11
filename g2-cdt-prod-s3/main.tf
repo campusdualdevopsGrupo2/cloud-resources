@@ -4,9 +4,7 @@ resource "aws_s3_bucket" "this" {
   lifecycle {
     prevent_destroy = var.prevent_destroy
   }
-  versioning {
-    enabled= var.versioning
-  }
+
 }
 /*
 resource "aws_s3_bucket_versioning" "this" {
