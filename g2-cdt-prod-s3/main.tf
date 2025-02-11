@@ -4,9 +4,8 @@ resource "aws_s3_bucket" "this" {
   lifecycle {
     prevent_destroy = var.prevent_destroy
   }
-
 }
-/*
+
 resource "aws_s3_bucket_versioning" "this" {
   bucket = aws_s3_bucket.this.bucket
 
@@ -14,7 +13,7 @@ resource "aws_s3_bucket_versioning" "this" {
     status = var.versioning_status
   }
 }
-
+/*
 resource "aws_s3_bucket_lifecycle_configuration" "this" {
   bucket = aws_s3_bucket.this.id
 

@@ -11,7 +11,7 @@ variable "prevent_destroy" {
 variable "versioning" {
   description = "Whether to prevent the destruction of the bucket"
   type        = bool
-  default     = false
+  default     = true
 }
 
 variable "versioning_status" {
