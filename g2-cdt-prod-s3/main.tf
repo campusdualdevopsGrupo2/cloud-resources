@@ -4,8 +4,11 @@ resource "aws_s3_bucket" "this" {
   lifecycle {
     prevent_destroy = var.prevent_destroy
   }
+  versioning {
+    enabled= var.versioning
+  }
 }
-
+/*
 resource "aws_s3_bucket_versioning" "this" {
   bucket = aws_s3_bucket.this.bucket
 
@@ -60,3 +63,4 @@ resource "aws_s3_bucket_public_access_block" "this" {
   ignore_public_acls      = var.ignore_public_acls
   restrict_public_buckets = var.restrict_public_buckets
 }
+*/

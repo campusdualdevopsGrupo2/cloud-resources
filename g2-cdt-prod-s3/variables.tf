@@ -8,6 +8,11 @@ variable "prevent_destroy" {
   type        = bool
   default     = false
 }
+variable "versioning" {
+  description = "Whether to prevent the destruction of the bucket"
+  type        = bool
+  default     = false
+}
 
 variable "versioning_status" {
   description = "The versioning status of the S3 bucket"
