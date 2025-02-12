@@ -30,9 +30,9 @@ variable "default_actions" {
   description = "Lista de acciones predeterminadas para el listener"
   type = list(object({
     type             = string
-    target_group_arn = string
-    fixed_response = optional(object({
-      status_code = string
+    target_group_arn = optional(string)
+    fixed_response   = optional(object({
+      status_code  = number
       content_type = string
       message_body = string
     }))
