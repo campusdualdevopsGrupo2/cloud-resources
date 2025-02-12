@@ -1,39 +1,68 @@
 variable "listener_arn" {
-  description = "ARN del listener del Load Balancer"
+  description = "ARN del listener al que se adjuntará la regla"
   type        = string
 }
 
 variable "priority" {
-  description = "Prioridad de la regla del listener"
+  description = "Prioridad de la regla"
   type        = number
+  default     = 100
 }
 
-# Acciones dinámicas: Lista de acciones
 variable "actions" {
-  description = "Lista de acciones a realizar en la regla del listener"
+  description = "Lista de acciones para la regla"
   type = list(object({
-    type             = string
-    target_group_arn = string
-    # Puedes añadir más campos si se agregan más tipos de acciones
-    # fixed_response = optional(object({
-    #   status_code = string
-    #   content_type = string
-    #   message_body = string
-    # }))
+    type               = string
+    forward            = optional(object({
+      target_group_arn = string
+      weight           = number
+      stickiness       = optional(object({
+        enabled  = bool
+        duration = number
+      }))
+    }))
+    redirect           = optional(object({
+      host        = string
+      port        = string
+      protocol    = string
+      status_code = string
+    }))
+    fixed_response     = optional(object({
+      content_type = string
+      message_body = string
+      status_code  = string
+    }))
+    authenticate_cognito = optional(object({
+      user_pool_arn       = string
+      user_pool_client_id = string
+      user_pool_domain    = string
+    }))
+    authenticate_oidc = optional(object({
+      authorization_endpoint = string
+      client_id              = string
+      client_secret          = string
+      issuer                 = string
+      token_endpoint         = string
+      user_info_endpoint     = string
+    }))
   }))
-  default = []
 }
 
-# Condiciones dinámicas: Lista de condiciones
 variable "conditions" {
-  description = "Lista de condiciones para la regla del listener"
+  description = "Lista de condiciones para la regla"
   type = list(object({
-    host_header    = optional(list(string))
-    path_pattern   = optional(list(string))
-    query_string   = optional(list(object({
-      key   = string
-      value = string
-    })))
+    host_header       = optional(list(string))
+    http_header_name  = optional(string)
+    http_header_values = optional(list(string))
+    path_pattern      = optional(list(string))
+    query_string_key  = optional(string)
+    query_string_value = optional(string)
+    source_ip         = optional(list(string))
   }))
-  default = []
+}
+
+variable "tags" {
+  description = "Etiquetas para la regla"
+  type        = map(string)
+  default     = {}
 }
