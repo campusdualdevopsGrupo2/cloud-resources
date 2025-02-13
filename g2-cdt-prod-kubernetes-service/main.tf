@@ -1,3 +1,8 @@
+provider "kubernetes" {
+  config_path    = var.kubeconfig_path
+  config_context = var.kubeconfig_context
+}
+
 resource "kubernetes_service" "this" {
   metadata {
     name      = var.name
@@ -21,11 +26,7 @@ resource "kubernetes_service" "this" {
     }
 
     # Condicional para manejar servicios tipo LoadBalancer con externalIPs
-    dynamic "external_ips" {
-      for_each = var.service_type == "LoadBalancer" && length(var.external_ips) > 0 ? var.external_ips : []
-      content {
-        ip = external_ips.value
-      }
+   external_ips = var.service_type == "LoadBalancer" && length(var.external_ips) > 0 ? var.external_ips : []
     }
   }
-}
+
