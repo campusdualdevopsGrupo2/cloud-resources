@@ -5,7 +5,7 @@ variable "load_balancer_arn" {
 
 variable "port" {
   description = "El puerto en el que escucha el Load Balancer"
-  type        = number
+  type        = string
 }
 
 variable "protocol" {
