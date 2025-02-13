@@ -3,3 +3,7 @@ data "external" "get_dns" {
    program = ["python3", "get_dns.py", "chat-app-service"]
    depends_on=[kubernetes_manifest.nginx_deployment_service]
 }
+
+output "dns_value" {
+  value = data.external.get_dns.result["dns"]
+}
