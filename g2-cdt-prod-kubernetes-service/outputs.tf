@@ -39,6 +39,6 @@ output "service_ports" {
 # IPs externas del servicio Kubernetes (si se aplica)
 output "service_external_ips" {
   description = "Las IPs externas del servicio Kubernetes (si es LoadBalancer)"
-  value       = kubernetes_service.this.spec[0].external_ips
-  condition   = kubernetes_service.this.spec[0].type == "LoadBalancer" && length(kubernetes_service.this.spec[0].external_ips) > 0
+  value = kubernetes_service.this.spec[0].type == "LoadBalancer" && length(kubernetes_service.this.spec[0].external_ips) > 0 ? kubernetes_service.this.spec[0].external_ips : []          
 }
+

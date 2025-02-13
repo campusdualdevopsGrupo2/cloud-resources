@@ -58,3 +58,14 @@ variable "external_ips" {
   type        = list(string)
   default     = []
 }
+
+variable "kubeconfig_path" {
+  description = "Ruta al archivo kubeconfig"
+  type        = string
+  default     = "~/.kube/config"
+}
+
+variable "kubeconfig_context" {
+  description = "Contexto de Kubernetes dentro del kubeconfig"
+  type        = string
+}
