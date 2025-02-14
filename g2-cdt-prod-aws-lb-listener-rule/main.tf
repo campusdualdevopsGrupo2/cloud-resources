@@ -25,7 +25,7 @@ resource "aws_lb_listener_rule" "this" {
       }
 
       dynamic "redirect" {
-        for_each = action.value.type == "redirect" ? [1] : []
+        for_each = action.value.type == "redirect" ? [action.value.redirect] : []
         content {
           host        = redirect.value.host
           port        = redirect.value.port
@@ -85,7 +85,7 @@ resource "aws_lb_listener_rule" "this" {
       }
 
       dynamic "path_pattern" {
-        for_each = condition.value.path_pattern != null ? [1] : []
+        for_each = condition.value.path_pattern != null ? [condition.value.path_pattern] : []
         content {
           values = condition.value.path_pattern
         }
