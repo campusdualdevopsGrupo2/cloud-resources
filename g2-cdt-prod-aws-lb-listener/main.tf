@@ -3,14 +3,14 @@ resource "aws_lb_listener" "this" {
   port              = var.port
   protocol          = var.protocol
 
-  # Configuración SSL opcional solo si el protocolo es HTTPS
+  /*# Configuración SSL opcional solo si el protocolo es HTTPS
   dynamic "ssl_configuration" {
     for_each = var.protocol == "HTTPS" ? [1] : []
     content {
       ssl_policy      = var.ssl_policy
       certificate_arn = var.certificate_arn
     }
-  }
+  }*/
 
   dynamic "default_action" {
     for_each = var.default_actions
