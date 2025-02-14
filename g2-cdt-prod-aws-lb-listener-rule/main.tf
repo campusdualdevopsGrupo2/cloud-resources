@@ -77,7 +77,7 @@ resource "aws_lb_listener_rule" "this" {
       }
 
       dynamic "http_header" {
-        for_each = lookup(condition.value, "http_header_name", null) != null ? [conditon.value.http_header] : []
+        for_each = lookup(condition.value, "http_header_name", null) != null ? [condition.value.http_header] : []
         content {
           http_header_name = condition.value.http_header_name
           values           = condition.value.http_header_values
